@@ -44,7 +44,8 @@ def get_inverse_key (key):
 
 if len(sys.argv) != 3:
     print('Usage: %s <text> <key_matrix>' % sys.argv[0])  
-    print('Use only multiples of 2 in the text, and only allowed matrices as keys')
+    print('Use only multiples of 2 in the text')
+    print('Use only allowed matrices (with multiplicative inverse mod 26)')
     print ('Example: python3 HillCipher.py "meetmeate" "5 8;17 3"')
     sys.exit(1)
 text = sys.argv[1]
