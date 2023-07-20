@@ -4,35 +4,30 @@ import gmpy
 
 #Hill encryption given a text multiple of 2 and a matrix key (with multiplicative inverse)
 def hill_encrypt(text,key):
-    pairs_array = text_to_num_arrays(text)
-    matrix = np.array(pairs_array)
-    pairs_multiply_result = matrix @ key
-    pairs_encrypted_numbers = pairs_multiply_result % 26
-    encrypted_text = num_arrays_to_text(pairs_encrypted_numbers)
+    encrypted_text = make_substitution(text,key)
     return encrypted_text
 
 #Hill decryption given a text multiple of 2 and a matrix key (with multiplicative inverse)
 def hill_decrypt(text,key):
-    pairs_array = text_to_num_arrays(text)
-    matrix = np.array(pairs_array)
     inverse_key = get_inverse_key(key)
-    pairs_multiply_result = matrix @ inverse_key
-    pairs_decrypted_numbers = pairs_multiply_result % 26
-    decrypted_text = num_arrays_to_text(pairs_decrypted_numbers)
+    decrypted_text = make_substitution(text,inverse_key)
     return decrypted_text
 
-def text_to_num_arrays (text):
+
+def make_substitution (text, key_matrix):
     #Map letters to numbers and insert in an array
     single_array = np.array([ord(char)-ord('a') for char in text])
     #Reshape in several 2 elements arrays 
     pairs_array = single_array.reshape(-1, 2)
-    return pairs_array
-
-def num_arrays_to_text (pairs_numbers):
-    numbers = pairs_numbers.flatten()
+    #Multiply every pair (array) by the key matrix, and add % 26
+    pairs_multiply_result = pairs_array @ key_matrix % 26
+    #Flatten to convert a single array
+    numbers = pairs_multiply_result.flatten()
+    #Map numbers to letters and join them in a string
     text = "".join([chr(num + 97) for num in numbers])
     return text
 
+#Get inverse for key_matrix mod 26
 def get_inverse_key (key):
     inv_key = np.array(key,copy=True)
     #Det of the matrix mod 26
@@ -55,7 +50,7 @@ if len(sys.argv) != 3:
 text = sys.argv[1]
 key = np.array(np.mat(sys.argv[2]))
 encrypted_text = hill_encrypt(text,key)
-print("Hill text encrypted: " + hill_encrypt(text,key))
+print("Hill text encrypted: " + encrypted_text)
 print("Hill text decrypted: " + hill_decrypt(encrypted_text,key))
 
 
