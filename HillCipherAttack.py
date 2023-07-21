@@ -50,9 +50,16 @@ def find_inversable_matrix_mxm (m):
     return elements
 
 def encrypt_text(text,m):
-    encrypted_text = hill_encrypt(text,key_to_analyze,m)
+    encrypted_text = hill_encrypt(text,key_to_find,m)
     return encrypted_text
 
-key_to_analyze = np.array(np.mat("12 1 7 8 8;13 10 16 3 25;22 19 20 24 3;0 13 18 20 22;19 18 4 4 1"))
+key_to_find = np.array(np.mat("12 1 7 8 8;13 10 16 3 25;22 19 20 24 3;0 13 18 20 22;19 18 4 4 1"))
 key = find_key(5)
+print("Key to find: ")
+print(key_to_find)
+print()
+print("Key founded: ")
 print(key)
+print()
+if np.array_equal(key_to_find, key):
+    print("GOAL ACHIEVED!")
