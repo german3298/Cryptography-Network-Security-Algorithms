@@ -96,7 +96,9 @@ public class LetterFrecuencyAttack {
       * An attack to a Vigenère Cipher that outputs "ans" 
       * possible texts. It outputs several texts because can 
       * decrypt a mixed text, with several keys (but with
-      * same key length), and in order of probability 
+      * same key length), and in order of probability.
+      * The more different keys there are, the longer the 
+      * texts should be.
       */
       public void IntenseAttackToVigenereCipher(String text,int len, int ans) {
         System.out.println("Starting attack...");
