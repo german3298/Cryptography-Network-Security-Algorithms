@@ -19,9 +19,10 @@ from HillCipher import text_to_numbers_matrix,numbers_matrix_to_text,get_inverse
 #   must have determinant other than 0 (for the 
 #   matrix to have inverse).
 #   -The determinant of the matrix mod 26, has to
-#   have modulo 26 multiplicative inverse.
+#   have modulo 26 multiplicative inverse (cause
+#   26 isn't prime number).
 #   
-#   @author Germán Rodríguez
+#   @author: Germán Rodríguez
 
 # Find a mxm matrix key
 def find_key(m):

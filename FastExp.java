@@ -1,5 +1,12 @@
 import java.util.Scanner;
 
+/*
+ * 
+ *  @author: Germán Rodríguez
+ * 
+ */
+
+
 public class FastExp {
     public static int fast_mod_exponentiation (int base, int exp, int mod) {
         if (mod == 1) return 0;

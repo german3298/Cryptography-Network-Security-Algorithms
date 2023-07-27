@@ -2,7 +2,7 @@ import numpy as np
 import gmpy
 
 #
-#   @author Germán Rodríguez
+#   @author: Germán Rodríguez
 #
 
 # Hill encryption given a text multiple of m and a matrix key (with multiplicative inverse)

@@ -1,5 +1,9 @@
 import Data.Char (ord, chr, isAsciiLower)
 
+
+-- @author: Germán Rodríguez
+
+
 --Simple Caesar Cipher encrypt (only for lowercase texts)  C = (p + k) mod 26
 caesarcipherEncrypt :: String -> Int -> String
 caesarcipherEncrypt xs k = [toCharNorm (encrypt x) | x <- xs, isAsciiLower x]

@@ -11,6 +11,7 @@ import java.util.Scanner;
  * Repeating the algorithm with several bases (a's),
  * it raises the probabilities to be prime (if returns 
  * inconclusive in all tests) exponentially.
+ * @author: Germán Rodríguez
  */
 
 public class MillerRabin {
