@@ -45,6 +45,24 @@ public class FrecuencyReader {
             System.out.println("Frecuency for letter " + (char)(i+'a') + " is " + frecuenciesText[i] + "%");
      }
 
+      /*
+       * Counts the number of ocurrences of the 
+       * given trigram at the given text
+       */
+      public int CountTrigram(String text,String trigram){
+         text = text.toLowerCase().replaceAll("[^a-z]", "");
+         int times = 0;
+         String textTrigram = "";
+         for (int i = 0; i < (text.length()-2);i++) {
+             char first = text.charAt(i);
+             char second = text.charAt(i+1);
+             char thirst = text.charAt(i+2);
+             textTrigram = "" + first + second + thirst;
+             if (textTrigram.equals(trigram)) times++;
+         }
+         return times;
+      }
+
      public static void main (String[] args){
         FrecuencyReader FR = new FrecuencyReader();
         double[] frecuencies = FR.ReadFrecuencies(args[0]);
