@@ -31,8 +31,8 @@ prepared_keys = des.prepare_keys(binary_key)
 
 encrypted_binary_text = des.encrypt(binary_plain_text,prepared_keys)
 print("Encrypted binary text: " + encrypted_binary_text)
-print("Encrypted text: " + bin_2_str(encrypted_binary_text))
+print("Encrypted text (HEX): " + bin_2_hex(encrypted_binary_text))
 
-decrypted_binary_text = des.decrypt(binary_plain_text,prepared_keys)
+decrypted_binary_text = des.decrypt(encrypted_binary_text,prepared_keys)
 print("Decrypted binary text: " + decrypted_binary_text)
 print("Decrypted text: " + bin_2_str(decrypted_binary_text))
