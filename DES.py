@@ -1,3 +1,14 @@
+#   Every needed functions and constants 
+#   to encrypt and decrypt with DES 
+#   algorithm.
+#
+#   Every text/ciphertext is a binary number
+#   as a string in UTF-8.
+#   Keys are the same.
+#   
+#   @author: Germán Rodríguez
+
+
 INITIAL_PERMUTATION=   [58, 50, 42, 34, 26, 18, 10, 2,
                         60, 52, 44, 36, 28, 20, 12, 4,
                         62, 54, 46, 38, 30, 22, 14, 6,
@@ -95,18 +106,21 @@ KEY_SCHEDULE= [1, 1, 2, 2,
                1, 2, 2, 2,
                2, 2, 2, 1]
 
+#   Encrypt is only apply the algorithm
 def encrypt(text, keys):
-    cipher_text = permute(text, INITIAL_PERMUTATION)
-    left,right = cipher_text[0:32], cipher_text[32:]
-    left,right = feistel_cipher(left,right,keys,0)
-    cipher_text = left + right
-    cipher_text = permute(cipher_text, INVERSE_INITIAL_PERMUTATION)
+    cipher_text = DES_algorithm(text,keys)
     return cipher_text
 
+#   Decrypt is apply the algorithm with the list of keys reversed
 def decrypt(cipher_text,keys):
-    text = permute(cipher_text, INITIAL_PERMUTATION)
-    left,right = text[0:32], text[32:]
     keys.reverse()
+    text = DES_algorithm(cipher_text,keys)
+    return text
+
+#   DES algorithm applied to a text
+def DES_algorithm(text,keys):
+    text = permute(text, INITIAL_PERMUTATION)
+    left,right = text[0:32], text[32:]
     left,right = feistel_cipher(left,right,keys,0)
     text = left + right
     text = permute(text, INVERSE_INITIAL_PERMUTATION)
@@ -148,16 +162,20 @@ def f_function(input,key):
     return output
 
 def s_boxes(input):
+    #Divide in groups of 6 bits
     groups6 = [input[i:i+6] for i in range(0, len(input), 6)]
     output = ""
     for i in range(len(groups6)):
-        output += s_box(i, groups6[i])
+        output += s_box(i, groups6[i]) 
     return output
 
 def s_box(index, text):
+    #Divide first and last bits to select row
     row = int(text[0]+text[-1],2)
+    #The middle bits to select column
     col = int(text[1:-1],2)
     output = S_BOXES[index][row][col]
+    #Transform int into his string binary representation
     output = bin(output)[2:].zfill(4)
     return output
 
