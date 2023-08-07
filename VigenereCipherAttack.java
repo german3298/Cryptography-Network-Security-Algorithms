@@ -239,14 +239,14 @@ public class VigenereCipherAttack {
     public static void main(String[] args) {
 
         /*
-         * * * * * ATTACK TO VIGENERE CIPHER WITH SEVERAL KEYS, WITH LENGTH 6 * * * * *
+         * * * * * ATTACK TO VIGENERE CIPHER WITH SEVERAL KEYS (LENGTH 6) * * * * *
          */
         // Scanner s = new Scanner(System.in);
         // System.out.println("Letter frecuency Vigenère attack, please select number of
         // output plaintexts \"n\":");
         // String option = s.nextLine();
-        // LetterFrecuencyAttack LFA = new LetterFrecuencyAttack();
-        // LFA.IntenseAttackToVigenereCipher(args[0], 6, Integer.parseInt(option));
+        // VigenereCipherAttack vca = new VigenereCipherAttack();
+        // vca.IntenseAttackToVigenereCipher(args[0], 6, Integer.parseInt(option));
         // s.close();
 
         /*
