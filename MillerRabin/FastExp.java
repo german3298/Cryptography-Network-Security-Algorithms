@@ -1,3 +1,4 @@
+package MillerRabin;
 import java.util.Scanner;
 
 /*

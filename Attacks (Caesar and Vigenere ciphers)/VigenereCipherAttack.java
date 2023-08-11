@@ -56,7 +56,7 @@ public class VigenereCipherAttack {
      */
     public void ForceBruteKeyVigenereAttack(String text, int startingKeyLength, int endKeyLength) {
         System.out.println("Trying keys from " + startingKeyLength + " to " + endKeyLength + ": ");
-        for (int i = startingKeyLength; i < endKeyLength; i++) {
+        for (int i = startingKeyLength; i <= endKeyLength; i++) {
             System.out.println("Key length: " + i);
             if (SimpleVigenereAttack(text, i)) {
                 System.out.println("Successful attack, stoping...");
@@ -72,6 +72,7 @@ public class VigenereCipherAttack {
      * @returns if the attack was successful returns true
      */
     public boolean SimpleVigenereAttack(String text, int len) {
+        text = text.toLowerCase().replaceAll("[^a-z]", "");
         System.out.println("Starting attack...");
         System.out.println("Dividing texts...");
         // First we divide the text in "key length" texts
@@ -239,7 +240,7 @@ public class VigenereCipherAttack {
     public static void main(String[] args) {
 
         /*
-         * * * * * ATTACK TO VIGENERE CIPHER WITH SEVERAL KEYS (LENGTH 6) * * * * *
+         * * * * * ATTACK TO VIGENERE CIPHER WITH SEVERAL KEYS AT SAME TEXT (LENGTH 6) * * * * *
          */
         // Scanner s = new Scanner(System.in);
         // System.out.println("Letter frecuency Vigenère attack, please select number of
@@ -250,9 +251,8 @@ public class VigenereCipherAttack {
         // s.close();
 
         /*
-         * * * * * ATTACK TO VIGENERE CIPHER WITH BRUTE FORCE TO DETECT KEYS LENGTH  * * * * *
+         * * * * * ATTACK TO VIGENERE CIPHER WITH BRUTE FORCE TO DETECT KEY LENGTH  * * * * *
          */
-
         Scanner s = new Scanner(System.in);
         System.out.println("Vigenère attack: \n");
         VigenereCipherAttack vca = new VigenereCipherAttack();
