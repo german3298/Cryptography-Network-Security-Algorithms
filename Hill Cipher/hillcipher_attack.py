@@ -1,7 +1,7 @@
 import numpy as np
 import gmpy
 import random
-from HillCipher import text_to_numbers_matrix,numbers_matrix_to_text,get_inverse_key, hill_encrypt
+from hillcipher import text_to_numbers_matrix,numbers_matrix_to_text,get_inverse_key, hill_encrypt
 
 # A know plaintext attack can be performed as follows:
 # Knowing that we have to obtain a matrix of 

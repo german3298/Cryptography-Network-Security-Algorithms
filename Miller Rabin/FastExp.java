@@ -1,4 +1,3 @@
-package MillerRabin;
 import java.util.Scanner;
 
 /*
@@ -9,6 +8,7 @@ import java.util.Scanner;
 
 
 public class FastExp {
+    
     public static int fast_mod_exponentiation (int base, int exp, int mod) {
         if (mod == 1) return 0;
         int value = 1;
@@ -17,16 +17,23 @@ public class FastExp {
         return value;
     }
 
+    /*
+     * Makes a fast modulo exponentiation 
+     * using succesive squaring binary method
+     * and modular arithmetic
+     * @return result of (base^exp modulo mod)
+     */
     public static int fast_mod_exponentiation_binary_method (int base, int exp, int mod) {
         if (mod == 1) return 0;
-        //Check if (modulus -1) * (modulus - 1) does not overflow base
+        //Should check if (mod - 1) * (mod - 1) doesn't overflow base
         int value = 1;
         base = base % mod;
+        //Check binary digits one by one, and if it's odd (2^n), change value
         while (exp > 0){
             if (exp % 2 == 1)
                 value = (value * base) % mod;
-            exp = exp >> 1;
-            base = (base*base) % mod;
+            exp = exp >> 1;                     //always change binary number shifting to the right
+            base = (base*base) % mod;           //change base every step, using modular arithmetic 
         }
         return value;
     }

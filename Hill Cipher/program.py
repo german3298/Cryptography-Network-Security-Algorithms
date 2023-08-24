@@ -1,12 +1,12 @@
 import numpy as np
 import sys
-import HillCipher as hc
+import hillcipher as hc
 
 if len(sys.argv) != 4:
     print('Usage: %s <text> <key_matrix> <dimensions>' % sys.argv[0])  
-    print('Use only text with nº of chars multiple of <dimensions>')
-    print('Use only allowed matrices (with multiplicative inverse mod 26)')
-    print('Example: python3 HillCipher.py "meetmeate" "5 8;17 3" "2"')
+    print('Where: <text> must have a nº of chars multiple of <dimensions>')
+    print('Where: <key_matrix> must have multiplicative inverse mod 26)')
+    print('Example: python3 program.py "meetmeat" "5 8;17 3" "2"')
     sys.exit(1)
 text = sys.argv[1]
 key = np.array(np.mat(sys.argv[2]))

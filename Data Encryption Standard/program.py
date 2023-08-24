@@ -1,5 +1,5 @@
 import sys 
-import DES as des
+import des
 
 #   Program to test my DES algorithm
 #   implementation based on strings
@@ -24,8 +24,9 @@ def bin_2_hex(text):
 
 if len(sys.argv) != 3:
     print('Usage: %s <plain_text> <key> ' % sys.argv[0])  
-    print('Plain text as a string, only 8 chars')
-    print('Key as a string, only 16 hexadecimal chars')
+    print('Where: <plain_text> is a string, only 8 chars')
+    print('Where: <key> is a string, only 16 hexadecimal chars')
+    print('Example: python3 program.py "meetmeat" "9234AB47C3428476"')
     sys.exit(1)
 
 text = sys.argv[1]
@@ -33,17 +34,16 @@ binary_plain_text = str_2_bin(text)
 key = sys.argv[2]
 binary_key = hex_2_bin(key)
 
+print()
 print("Plaintext: " + binary_plain_text)
 print()
 
-prepared_keys = des.prepare_keys(binary_key)
-
-encrypted_binary_text = des.encrypt(binary_plain_text,prepared_keys)
+encrypted_binary_text = des.encrypt(binary_plain_text,binary_key)
 print("Encrypted binary text: " + encrypted_binary_text)
 print("Encrypted text (HEX): " + bin_2_hex(encrypted_binary_text))
 print()
 
-decrypted_binary_text = des.decrypt(encrypted_binary_text,prepared_keys)
+decrypted_binary_text = des.decrypt(encrypted_binary_text,binary_key)
 print("Decrypted binary text: " + decrypted_binary_text)
 print("Decrypted text: " + bin_2_str(decrypted_binary_text))
 print()

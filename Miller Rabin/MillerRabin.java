@@ -1,4 +1,3 @@
-package MillerRabin;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -16,27 +15,6 @@ import java.util.Scanner;
  */
 
 public class MillerRabin {
-
-    /*
-     * Makes a fast modulo exponentiation 
-     * using succesive squaring binary method
-     * and modular arithmetic
-     * @return result of (base^exp modulo mod)
-     */
-    private int fast_mod_exponentiation_binary_method (int base, int exp, int mod) {
-        if (mod == 1) return 0;
-        //Should check if (mod - 1) * (mod - 1) doesn't overflow base
-        int value = 1;
-        base = base % mod;
-        //Check binary digits one by one, and if it's odd (2^n), change value
-        while (exp > 0){
-            if (exp % 2 == 1)
-                value = (value * base) % mod;
-            exp = exp >> 1;                     //always change binary number shifting to the right
-            base = (base*base) % mod;           //change base every step, using modular arithmetic 
-        }
-        return value;
-    }
     
     /*
      * Miller-Rabin algorithm 
@@ -64,10 +42,10 @@ public class MillerRabin {
         }
         //Check tests, checking certain prime numbers properties (self-explicated in code)
         //If not passed, for sure it's a composite number
-        if (fast_mod_exponentiation_binary_method(a,q,n) == 1) return "inconclusive";
+        if (FastExp.fast_mod_exponentiation_binary_method(a,q,n) == 1) return "inconclusive";
         for (int j = 0; j < k; j++) {
             int pow = (int) Math.pow(2,j);
-            if (fast_mod_exponentiation_binary_method(a,q*pow,n) == nsub) 
+            if (FastExp.fast_mod_exponentiation_binary_method(a,q*pow,n) == nsub) 
                 return "inconclusive";
         }
         return "composite";
