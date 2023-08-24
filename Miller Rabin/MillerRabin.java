@@ -15,6 +15,12 @@ import java.util.Scanner;
  */
 
 public class MillerRabin {
+
+    FastExp fe;
+
+    public MillerRabin() {
+        fe = new FastExp();
+    }
     
     /*
      * Miller-Rabin algorithm 
@@ -42,10 +48,10 @@ public class MillerRabin {
         }
         //Check tests, checking certain prime numbers properties (self-explicated in code)
         //If not passed, for sure it's a composite number
-        if (FastExp.fast_mod_exponentiation_binary_method(a,q,n) == 1) return "inconclusive";
+        if (fe.fast_mod_exponentiation_binary_method(a,q,n) == 1) return "inconclusive";
         for (int j = 0; j < k; j++) {
             int pow = (int) Math.pow(2,j);
-            if (FastExp.fast_mod_exponentiation_binary_method(a,q*pow,n) == nsub) 
+            if (fe.fast_mod_exponentiation_binary_method(a,q*pow,n) == nsub) 
                 return "inconclusive";
         }
         return "composite";
