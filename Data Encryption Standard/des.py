@@ -109,18 +109,18 @@ KEY_SCHEDULE= [1, 1, 2, 2,
 #   Encrypt is only apply the algorithm
 def encrypt(text, key):
     extended_keys = extend_keys(key)
-    cipher_text = DES_algorithm(text,extended_keys)
+    cipher_text = des_algorithm(text,extended_keys)
     return cipher_text
 
 #   Decrypt is apply the algorithm with the list of keys reversed
 def decrypt(cipher_text,key):
     extended_keys = extend_keys(key)
     extended_keys.reverse()
-    text = DES_algorithm(cipher_text,extended_keys)
+    text = des_algorithm(cipher_text,extended_keys)
     return text
 
 #   DES algorithm applied to a text
-def DES_algorithm(text,keys):
+def des_algorithm(text,keys):
     text = permute(text, INITIAL_PERMUTATION)
     left,right = text[0:32], text[32:]
     left,right = feistel_cipher(left,right,keys,0)

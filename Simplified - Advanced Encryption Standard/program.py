@@ -12,7 +12,7 @@ if len(sys.argv) != 3:
     print('Usage: %s <plain_text_binary> <key_binary> ' % sys.argv[0])  
     print('Where: <plain_text_binary> is a string, only 16 bits in binary')
     print('Where: <key_binary> is a string, only 16 bits in binary')
-    print('Example: python3 program.py "meetmeat" "9234AB47C3428476"')
+    print('Example: python3 program.py "0110111101101011" "1010011100111011"')
     sys.exit(1)
 
 binary_plain_text = sys.argv[1]
