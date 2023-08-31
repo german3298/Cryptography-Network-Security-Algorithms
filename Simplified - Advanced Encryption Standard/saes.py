@@ -25,9 +25,9 @@ INV_MIX_COL_MATRIX= [[9,2],
                      [2,9]]
 
 #   Encrypt is only apply the algorithm
-def encrypt(text, key):
+def encrypt(text, key, one_round=False):
     extended_key = extend_key(key)
-    cipher_text = saes_algorithm(text,extended_key,False)
+    cipher_text = saes_algorithm(text,extended_key,False, one_round)
     return cipher_text
 
 #   Decrypt is apply the algorithm with the list of keys reversed
@@ -38,17 +38,20 @@ def decrypt(cipher_text,key):
     return text
 
 #   S-AES algorithm applied to a text
-def saes_algorithm(text,keys,inv):
+def saes_algorithm(text,keys,inv, one_round=False):
     state = xor(text, keys[0])
     state = text_to_matrix(state)
     state = nibble_substitution(state,inv)
-    state = shift_row(state)
+    state = shift_rows(state)
     state = mix_columns(state,inv)
     if inv:
         keys[1] = matrix_to_text(mix_columns(text_to_matrix(keys[1]),inv))
-    state = text_to_matrix(xor(matrix_to_text(state), keys[1]))
+    state = xor(matrix_to_text(state), keys[1])
+    if one_round:
+        return state
+    state = text_to_matrix(state)
     state = nibble_substitution(state,inv)
-    state = shift_row(state)
+    state = shift_rows(state)
     state = xor(matrix_to_text(state), keys[2])
     return state
 
@@ -58,7 +61,7 @@ def nibble_substitution(matrix,inv):
             matrix[i][j] = s_box_subs(matrix[i][j],inv)
     return matrix
 
-def shift_row(matrix):
+def shift_rows(matrix):
     matrix[1][0],matrix[1][1] = matrix[1][1],matrix[1][0] 
     return matrix
 
