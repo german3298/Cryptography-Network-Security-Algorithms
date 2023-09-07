@@ -16,11 +16,6 @@ import java.util.Scanner;
 
 public class MillerRabin {
 
-    FastExp fe;
-
-    public MillerRabin() {
-        fe = new FastExp();
-    }
     
     /*
      * Miller-Rabin algorithm 
@@ -31,7 +26,7 @@ public class MillerRabin {
      * @return "composite" if we are sure that isn't a prime number,
      * or "inconclusive" if it could be a prime number
      */
-    private String miller_rabin_test (int a, int n) {
+    private String millerRabinTest (int a, int n) {
         if (n % 2 == 0) return "composite";  //If number is even, obviously is a composite number
         //Find k and q, k > 0 and q odd, so that n-1 = 2^k * q
         int q = 0;
@@ -48,10 +43,10 @@ public class MillerRabin {
         }
         //Check tests, checking certain prime numbers properties (self-explicated in code)
         //If not passed, for sure it's a composite number
-        if (fe.fast_mod_exponentiation_binary_method(a,q,n) == 1) return "inconclusive";
+        if (FastExp.fastModExponentiationBit(a,q,n) == 1) return "inconclusive";
         for (int j = 0; j < k; j++) {
             int pow = (int) Math.pow(2,j);
-            if (fe.fast_mod_exponentiation_binary_method(a,q*pow,n) == nsub) 
+            if (FastExp.fastModExponentiationBit(a,q*pow,n) == nsub) 
                 return "inconclusive";
         }
         return "composite";
@@ -74,7 +69,7 @@ public class MillerRabin {
             int n = Integer.parseInt(s.nextLine());
             System.out.println("Select base:");
             int a = Integer.parseInt(s.nextLine());
-            String ans = mr.miller_rabin_test(a,n);
+            String ans = mr.millerRabinTest(a,n);
             System.out.println("The number " + n + ", with base " + a + " is " + ans);
 
         } else if (option.equals("2")){
@@ -89,7 +84,7 @@ public class MillerRabin {
                 bases[i] = rand.nextInt(n-2)+2;
             System.out.println("Test results for number " + n + ": ");
             for (int i = 0; i < basesNumber; i++)
-                System.out.println((i+1) + ") With base " + bases[i] + ": " + mr.miller_rabin_test(bases[i], n));
+                System.out.println((i+1) + ") With base " + bases[i] + ": " + mr.millerRabinTest(bases[i], n));
 
         } else {
 

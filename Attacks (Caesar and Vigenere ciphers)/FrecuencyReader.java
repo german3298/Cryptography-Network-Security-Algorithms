@@ -25,7 +25,7 @@ public class FrecuencyReader {
       * Reads the frecuencies from the text and 
       * creates an array with the relative frecuencies
       */
-     public double[] ReadFrecuencies (String text) {
+     public double[] readFrecuencies (String text) {
         int[] frecuencies = new int[26];
         double[] frecuenciesText = new double[26];
         text = text.toLowerCase().replaceAll("[^a-z]", "");   //Remove everything that is not a letter
@@ -40,7 +40,7 @@ public class FrecuencyReader {
          return frecuenciesText;
      }
 
-     public void PrintFrecuencies (double[] frecuenciesText) {
+     public void printFrecuencies (double[] frecuenciesText) {
         for (int i = 0; i < frecuenciesText.length; i++)
             System.out.println("Frecuency for letter " + (char)(i+'a') + " is " + frecuenciesText[i] + "%");
      }
@@ -49,7 +49,7 @@ public class FrecuencyReader {
        * Counts the number of ocurrences of the 
        * given trigram at the given text
        */
-      public int CountTrigram(String text,String trigram){
+      public int countTrigram(String text,String trigram){
          text = text.toLowerCase().replaceAll("[^a-z]", "");
          int times = 0;
          String textTrigram = "";
@@ -65,7 +65,7 @@ public class FrecuencyReader {
 
      public static void main (String[] args){
         FrecuencyReader FR = new FrecuencyReader();
-        double[] frecuencies = FR.ReadFrecuencies(args[0]);
-        FR.PrintFrecuencies(frecuencies);
+        double[] frecuencies = FR.readFrecuencies(args[0]);
+        FR.printFrecuencies(frecuencies);
      }
 }

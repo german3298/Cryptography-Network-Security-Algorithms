@@ -27,14 +27,14 @@ public class CaesarCipherAttack {
      * with the "e" letter, which is the most repeated in
      * English language
      */
-    public void AttackToAdditiveCipher(String text, int ans) {
+    public void attackToAdditiveCipher(String text, int ans) {
         int[] keysList = getPossibleKeys(text, ans);
         System.out.println("\nStarting attack...");
         for (int i = 0; i < ans; i++) {
             if (keysList[i] == 0)
                 continue;
             System.out.println("\nText with key " + keysList[i] + ": ");
-            System.out.println("\n" + cc.CaesarCipherDecrypt(text, keysList[i]) + "\n");
+            System.out.println("\n" + cc.caesarCipherDecrypt(text, keysList[i]) + "\n");
         }
     }
 
@@ -46,7 +46,7 @@ public class CaesarCipherAttack {
     public int[] getPossibleKeys(String text, int keys) {
         int[] keysArr = new int[keys];
         sM.clear();
-        double[] frecuenciesText = fr.ReadFrecuencies(text);
+        double[] frecuenciesText = fr.readFrecuencies(text);
         for (int i = 0; i < frecuenciesText.length; i++)
             sM.put(frecuenciesText[i], i);
         for (int i = 0; i < keys; i++)
@@ -80,7 +80,7 @@ public class CaesarCipherAttack {
         System.out.println("Letter frecuency attack to additive cipher, please select number of output plaintexts:");
         String option = s.nextLine();
         CaesarCipherAttack cca = new CaesarCipherAttack();
-        cca.AttackToAdditiveCipher(args[0], Integer.parseInt(option));
+        cca.attackToAdditiveCipher(args[0], Integer.parseInt(option));
         s.close();
     }
 

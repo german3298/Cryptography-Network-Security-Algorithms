@@ -21,7 +21,7 @@ public class VigenereCipherAttack {
     /*
      * Simple VigenereCipher Decrypt
      */
-    public String VigenereDecrypt(String text, int[] key) {
+    public String vigenereDecrypt(String text, int[] key) {
         text = text.toLowerCase().replaceAll("[^a-z]", "");
         String plainText = "";
         int len = key.length;
@@ -39,7 +39,7 @@ public class VigenereCipherAttack {
     /*
      * The cosine of the angle between two vectors
      */
-    public double Cosangle(double[] x, double[] y) {
+    public double cosangle(double[] x, double[] y) {
         double numerator = 0;
         double lengthx2 = 0;
         double lengthy2 = 0;
@@ -54,11 +54,11 @@ public class VigenereCipherAttack {
     /*
      * Attack trying several key lengths
      */
-    public void ForceBruteKeyVigenereAttack(String text, int startingKeyLength, int endKeyLength) {
+    public void forceBruteKeyVigenereAttack(String text, int startingKeyLength, int endKeyLength) {
         System.out.println("Trying keys from " + startingKeyLength + " to " + endKeyLength + ": ");
         for (int i = startingKeyLength; i <= endKeyLength; i++) {
             System.out.println("Key length: " + i);
-            if (SimpleVigenereAttack(text, i)) {
+            if (simpleVigenereAttack(text, i)) {
                 System.out.println("Successful attack, stoping...");
                 break;
             }
@@ -71,7 +71,7 @@ public class VigenereCipherAttack {
      * 
      * @returns if the attack was successful returns true
      */
-    public boolean SimpleVigenereAttack(String text, int len) {
+    public boolean simpleVigenereAttack(String text, int len) {
         text = text.toLowerCase().replaceAll("[^a-z]", "");
         System.out.println("Starting attack...");
         System.out.println("Dividing texts...");
@@ -90,9 +90,9 @@ public class VigenereCipherAttack {
         for (int i = 0; i < len; i++) {
             numberKeys[i] = 0;
             for (int j = 0; j < 26; j++) {
-                String decipheredText = cc.CaesarCipherDecrypt(texts[i], j);
-                double[] frec = fr.ReadFrecuencies(decipheredText);
-                if (Cosangle(englishFrec, frec) > 0.9) {
+                String decipheredText = cc.caesarCipherDecrypt(texts[i], j);
+                double[] frec = fr.readFrecuencies(decipheredText);
+                if (cosangle(englishFrec, frec) > 0.9) {
                     numberKeys[i] = j;
                     decryptedTexts[i] = decipheredText;
                     founded++;
@@ -128,7 +128,7 @@ public class VigenereCipherAttack {
      * The more different keys there are, the longer the
      * texts should be.
      */
-    public void IntenseAttackToVigenereCipher(String text, int len, int ans) {
+    public void intenseAttackToVigenereCipher(String text, int len, int ans) {
         System.out.println("Starting attack...");
 
         System.out.println("Dividing texts...");
@@ -156,9 +156,9 @@ public class VigenereCipherAttack {
         for (int i = 0; i < len; i++) {
             numberKeys[i] = 0;
             for (int j = 0; j < 26; j++) {
-                String decipheredText = cc.CaesarCipherDecrypt(texts[i], j);
-                double[] frec = fr.ReadFrecuencies(decipheredText);
-                if (Cosangle(englishFrec, frec) > 0.8) {
+                String decipheredText = cc.caesarCipherDecrypt(texts[i], j);
+                double[] frec = fr.readFrecuencies(decipheredText);
+                if (cosangle(englishFrec, frec) > 0.8) {
                     if (numberKeys[i] == maxKeys)
                         break;
                     matrixKeys[i][numberKeys[i]] = j;
@@ -178,7 +178,7 @@ public class VigenereCipherAttack {
         // therefore a brute force attack is needed with all
         // obtained keys to test every possibility
         if (len == 6)
-            finalTextsCount = BruteForce6LengthKey(text, finalTexts, numberKeys, matrixKeys);
+            finalTextsCount = bruteForce6LengthKey(text, finalTexts, numberKeys, matrixKeys);
 
         System.out.println("Selecting texts to output...");
         // For made last selection from the output from brute force
@@ -188,7 +188,7 @@ public class VigenereCipherAttack {
         int trigrams;
         SortedMap<Integer, String> orderedTexts = new TreeMap<Integer, String>();
         for (int i = 0; i < finalTextsCount; i++) {
-            trigrams = fr.CountTrigram(finalTexts[i], "the");
+            trigrams = fr.countTrigram(finalTexts[i], "the");
             orderedTexts.put(trigrams, finalTexts[i]);
         }
 
@@ -211,7 +211,7 @@ public class VigenereCipherAttack {
      * @param matrixKeys: array of try keys for every letter in key
      * @return: Number of texts obtained with the given keys
      */
-    public int BruteForce6LengthKey(String text, String[] finalTexts, int[] numberKeys, int[][] matrixKeys) {
+    public int bruteForce6LengthKey(String text, String[] finalTexts, int[] numberKeys, int[][] matrixKeys) {
         int finalTextsCount = 0;
         // Array to save the key to do the try in the attack
         int[] finalKeys = new int[6];
@@ -230,7 +230,7 @@ public class VigenereCipherAttack {
                                 String finalText = "Key: ";
                                 for (int o = 0; o < finalKeys.length; o++)
                                     finalText += finalKeys[o] + " ";
-                                finalText += "\nText:\n" + VigenereDecrypt(text, finalKeys) + "\n";
+                                finalText += "\nText:\n" + vigenereDecrypt(text, finalKeys) + "\n";
                                 finalTexts[finalTextsCount] = finalText;
                                 finalTextsCount++;
                             }
@@ -247,7 +247,7 @@ public class VigenereCipherAttack {
         // output plaintexts \"n\":");
         // String option = s.nextLine();
         // VigenereCipherAttack vca = new VigenereCipherAttack();
-        // vca.IntenseAttackToVigenereCipher(args[0], 6, Integer.parseInt(option));
+        // vca.intenseAttackToVigenereCipher(args[0], 6, Integer.parseInt(option));
         // s.close();
 
         /*
@@ -256,7 +256,7 @@ public class VigenereCipherAttack {
         Scanner s = new Scanner(System.in);
         System.out.println("Vigenère attack: \n");
         VigenereCipherAttack vca = new VigenereCipherAttack();
-        vca.ForceBruteKeyVigenereAttack(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+        vca.forceBruteKeyVigenereAttack(args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]));
         s.close();
     }
 }
