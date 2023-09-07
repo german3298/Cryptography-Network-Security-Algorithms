@@ -13,12 +13,10 @@ public class CaesarCipherAttack {
 
     FrecuencyReader fr;
     SortedMap<Double, Integer> sM;
-    CaesarCipher cc;
 
     public CaesarCipherAttack() {
         fr = new FrecuencyReader();
         sM = new TreeMap<Double, Integer>();
-        cc = new CaesarCipher();
     }
 
     /*
@@ -34,7 +32,7 @@ public class CaesarCipherAttack {
             if (keysList[i] == 0)
                 continue;
             System.out.println("\nText with key " + keysList[i] + ": ");
-            System.out.println("\n" + cc.caesarCipherDecrypt(text, keysList[i]) + "\n");
+            System.out.println("\n" + CaesarCipher.caesarCipherDecrypt(text, keysList[i]) + "\n");
         }
     }
 

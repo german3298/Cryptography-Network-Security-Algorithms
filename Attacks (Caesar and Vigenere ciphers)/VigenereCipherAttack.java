@@ -90,7 +90,7 @@ public class VigenereCipherAttack {
         for (int i = 0; i < len; i++) {
             numberKeys[i] = 0;
             for (int j = 0; j < 26; j++) {
-                String decipheredText = cc.caesarCipherDecrypt(texts[i], j);
+                String decipheredText = CaesarCipher.caesarCipherDecrypt(texts[i], j);
                 double[] frec = fr.readFrecuencies(decipheredText);
                 if (cosangle(englishFrec, frec) > 0.9) {
                     numberKeys[i] = j;
@@ -156,7 +156,7 @@ public class VigenereCipherAttack {
         for (int i = 0; i < len; i++) {
             numberKeys[i] = 0;
             for (int j = 0; j < 26; j++) {
-                String decipheredText = cc.caesarCipherDecrypt(texts[i], j);
+                String decipheredText = CaesarCipher.caesarCipherDecrypt(texts[i], j);
                 double[] frec = fr.readFrecuencies(decipheredText);
                 if (cosangle(englishFrec, frec) > 0.8) {
                     if (numberKeys[i] == maxKeys)

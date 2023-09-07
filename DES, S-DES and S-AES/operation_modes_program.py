@@ -14,33 +14,33 @@ from conversions import char_to_strbin, strbin_to_char, strhex_to_strbin, strbin
 #
 #   @author: Germán Rodríguez
 
-#
-#   TESTING CBC IN S-DES ****************************************************************
-#
+mode = om.ctr()
 
-iv = "10101010"
-plain_text = "0000000100100011"
-key = "0111111101"
+#
+#   TESTING MODES IN S-DES ****************************************************************
+#
 
 sdes = sd.sdes()
-cbc = om.cbc()
+plaintext = "000000010000001000000100"
+key = "0111111101"
+iv = "00000000"
 
 print()
-print("Plaintext: " + plain_text)
+print("Plaintext: " + plaintext)
 print("Key: " + key)
-print("Initialization vector: " + iv)
+print("Initialization vector (or counter): " + iv)
 print()
 
-cipher_text = cbc.encrypt(sdes,8,key,iv,plain_text)
+cipher_text = mode.encrypt(sdes,8,key,iv,plaintext)
 print("Cipher text: " + cipher_text)
 print()
 
-decrypted_text = cbc.decrypt(sdes,8,key,iv,cipher_text)
+decrypted_text = mode.decrypt(sdes,8,key,iv,cipher_text)
 print("Decrypted text: " + decrypted_text)
 print()
 
 #
-#   TESTING CBC IN DES ****************************************************************
+#   TESTING MODES IN DES ****************************************************************
 #
 
 des = ds.des()
@@ -48,19 +48,19 @@ text = "meetmeatholahola"
 binary_plain_text = char_to_strbin(text)
 key = "9234AB47C3428476"
 binary_key = strhex_to_strbin(key)
-iv = "0815123B93D2A5C7"
+iv = "0815123B93D2A5C8"
 binary_iv = strhex_to_strbin(iv)
 
 print()
 print("Binary plaintext: " + binary_plain_text)
 print()
 
-cipher_text_binary = cbc.encrypt(des,64,binary_key,binary_iv,binary_plain_text)
+cipher_text_binary = mode.encrypt(des,64,binary_key,binary_iv,binary_plain_text)
 print("Cipher text (binary): " + cipher_text_binary)
 print("Cipher text (HEX): " + strbin_to_strhex(cipher_text_binary))
 print()
 
-decrypted_binary_text = cbc.decrypt(des,64,binary_key,binary_iv,cipher_text_binary)
+decrypted_binary_text = mode.decrypt(des,64,binary_key,binary_iv,cipher_text_binary)
 print("Decrypted text (binary): " + decrypted_binary_text)
 print("Decrypted text: " + strbin_to_char(decrypted_binary_text))
 print()

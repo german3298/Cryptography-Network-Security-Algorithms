@@ -3,7 +3,7 @@ public class CaesarCipher {
     /*
      * Simple CaesarCipher Decrypt
      */
-    public String caesarCipherDecrypt(String text, int key) {
+    public static String caesarCipherDecrypt(String text, int key) {
         text = text.toLowerCase().replaceAll("[^a-z]", "");
         String decryptedText = "";
         for (int i = 0; i < text.length(); i++) {
