@@ -1,10 +1,15 @@
+import galois
+from bit_operations import xor
+from conversions import strbin_to_int, int_to_strbin
+
 #   Every needed functions and constants 
 #   to encrypt and decrypt with S-AES
 #   algorithm.
+#   It works with binary numbers in 
+#   strings like "00111000" for
+#   learning purposes.
 #
 #   @author: Germán Rodríguez
-
-import galois
 
 RCON= ["10000000","00110000"]
 
@@ -24,18 +29,51 @@ MIX_COL_MATRIX= [[1,4],
 INV_MIX_COL_MATRIX= [[9,2],
                      [2,9]]
 
-#   Encrypt is only apply the algorithm
-def encrypt(text, key, one_round=False):
-    extended_key = extend_key(key)
-    cipher_text = saes_algorithm(text,extended_key,False, one_round)
-    return cipher_text
+class saes:
+    #   Encrypt is only apply the algorithm
+    def encrypt(self,text, key, one_round=False):
+        generated_keys = generate_keys(key)
+        cipher_text = saes_algorithm(text,generated_keys,False, one_round)
+        return cipher_text
 
-#   Decrypt is apply the algorithm with the list of keys reversed
-def decrypt(cipher_text,key):
-    extended_key = extend_key(key)
-    extended_key.reverse()
-    text = saes_algorithm(cipher_text,extended_key,True)
-    return text
+    #   Decrypt is apply the algorithm with the list of keys reversed
+    def decrypt(self,cipher_text,key):
+        generated_keys = generate_keys(key)
+        generated_keys.reverse()
+        text = saes_algorithm(cipher_text,generated_keys,True)
+        return text
+    
+def generate_keys(key):
+    keys = []
+    keys.append(key)
+    w = [""] * 6
+    w[0],w[1] = key[0:8], key[8:16]
+    ctr = 0
+    for i in range(2,6,2):
+        w[i] = xor (w[i-2],xor(RCON[ctr],sub_nib(rot_nib(w[i-1]))))
+        w[i+1] = xor(w[i],w[i-1])
+        left,right = w[i], w[i+1]
+        keys.append(left+right)
+        ctr += 1
+    return keys
+
+def rot_nib(w):
+    w_iz, w_der = w[0:4],w[4:8]
+    return w_der + w_iz
+
+def sub_nib(w):
+    w_iz, w_der = w[0:4],w[4:8]
+    w_iz,w_der = s_box_subs(w_iz,False), s_box_subs(w_der,False)
+    return w_iz + w_der
+
+def s_box_subs(n, inv):
+    ind = strbin_to_int(n)
+    if inv == False:
+        n_out = S_BOX[ind]
+    else:
+        n_out = INV_S_BOX[ind]
+    n_out = int_to_strbin(n_out, 4)
+    return n_out
 
 #   S-AES algorithm applied to a text
 def saes_algorithm(text,keys,inv, one_round=False):
@@ -73,52 +111,13 @@ def mix_columns(matrix,inv):
         constant_matrix = GF24(INV_MIX_COL_MATRIX)
     for j in range(len(matrix[0])):
         for i in range(len(matrix)):
-            matrix[i][j] = int(matrix[i][j],2)
+            matrix[i][j] = strbin_to_int(matrix[i][j])
     GF_matrix = GF24(matrix)
     res = constant_matrix @ GF_matrix
     output = res.tolist()
     for j in range(len(output[0])):
         for i in range(len(output)):
-            output[i][j] = bin(output[i][j])[2:].zfill(4)
-    return output
-
-def extend_key(key):
-    keys = []
-    keys.append(key)
-    w0,w1 = key[0:8], key[8:16]
-    w2 = xor (w0,xor(RCON[0],sub_nib(rot_nib(w1))))
-    w3 = xor(w2,w1)
-    w4 = xor (w2,xor(RCON[1],sub_nib(rot_nib(w3))))
-    w5 = xor(w4,w3)
-    keys.append(w2 + w3)
-    keys.append(w4 + w5)
-    return keys
-
-def rot_nib(w):
-    w_iz, w_der = w[0:4],w[4:8]
-    return w_der + w_iz
-
-def sub_nib(w):
-    w_iz, w_der = w[0:4],w[4:8]
-    w_iz,w_der = s_box_subs(w_iz,False), s_box_subs(w_der,False)
-    return w_iz + w_der
-
-def s_box_subs(n, inv):
-    ind = int(n,2)
-    if inv == False:
-        n_out = S_BOX[ind]
-    else:
-        n_out = INV_S_BOX[ind]
-    n_out = bin(n_out)[2:].zfill(4)
-    return n_out
-
-def xor(input1, input2):
-    output = ""
-    for n in range(len(input1)):
-        if (input1[n] == input2[n]):
-            output += "0"
-        else:
-            output += "1"
+            output[i][j] = int_to_strbin(output[i][j],4)
     return output
 
 def text_to_matrix(text):
